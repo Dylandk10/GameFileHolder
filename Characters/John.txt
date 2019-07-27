@@ -1,0 +1,2 @@
+UserName = John
+Score = 12
