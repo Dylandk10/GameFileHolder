@@ -42,9 +42,8 @@ public class Server {
 
         while(inputStream.hasNextLine()) {
           //sends to get the user from back end then returns the user for use
-          String name = inputStream.nextLine();
-          System.out.println(name);
-          user = MainApp.initUserHandler(name);
+          String result = inputStream.nextLine();
+          user = MainApp.initUserHandler(result);
           outputStream.println("UserName: " + user.getName() + ", Score: " + user.getScore());
         }
       } catch(Exception e) {

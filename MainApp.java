@@ -25,8 +25,9 @@ public class MainApp {
     server.init();
   }
   //used for client connections from the input stream
-  public static Users initUserHandler(String name) throws IOException {
-    UserHandler user = new UserHandler(name.trim());
+  public static Users initUserHandler(String result) throws IOException {
+    String[] token = result.split(",");
+    UserHandler user = new UserHandler(token[0].trim(), token[1].trim());
     userList.add(user.getUser());
     return user.getUser();
   }
@@ -137,7 +138,7 @@ public class MainApp {
 
     while(reader.hasNextLine()) {
       String[] line = reader.nextLine().split("=");
-      Users user = new Users(line[0].trim(), line[1].trim());
+      Users user = new Users(line[0].trim(), line[1].trim(), line[2].trim());
       userList.add(user);
     }
   }

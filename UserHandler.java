@@ -7,12 +7,13 @@ import java.util.Scanner;
 public class UserHandler {
   private Users user;
 
-  public UserHandler(String name) throws IOException {
-    login(name);
+  public UserHandler(String name, String password) throws IOException {
+    login(name, password);
   }
   public UserHandler() throws IOException {
     String name = promptLogin();
-    login(name);
+    String password = promptPass();
+    login(name, password);
   }
 
   private String promptLogin() {
@@ -21,13 +22,19 @@ public class UserHandler {
     String logName = key.nextLine();
     return logName;
   }
+  private String promptPass() {
+    Scanner key = new Scanner(System.in);
+    System.out.println("Enter Password");
+    String pass = key.nextLine();
+    return pass;
+  }
 
-  private void login(String name) throws IOException {
+  private void login(String name, String password) throws IOException {
     File file = new File("./../Characters/" + name +".txt");
     //create new file for the player
     if(!file.exists()) {
       try {
-        firstLog(name);
+        firstLog(name, password);
       } catch(IOException e) {
         System.out.println("Could not create character file");
       }
@@ -37,24 +44,26 @@ public class UserHandler {
     while(scan.hasNextLine()) {
       String[] line = scan.nextLine().split("=");
       String[] line2 = scan.nextLine().split("=");
-      user = new Users(line[1].trim(), line2[1].trim());
+      String[] line3 = scan.nextLine().split("=");
+      user = new Users(line[1].trim(), line2[1].trim(), line3[1].trim());
     }
   }
+  //returns the user
   public Users getUser() {
     return user;
   }
 
-  private void firstLog(String name) throws IOException {
-    playerSaving(name, 0);
-    login(name);
+  private void firstLog(String name, String password) throws IOException {
+    playerSaving(name, 0, password);
+    login(name, password);
   }
 
   public void chnageName(String newName) throws IOException {
     user.setName(newName);
-    playerSaving(user.getName(), user.getScore());
+    playerSaving(user.getName(), user.getScore(), user.getPassword());
   }
   //for saving players information to a personal file
-  public void playerSaving(String name, int score) throws IOException {
+  public void playerSaving(String name, int score, String password) throws IOException {
     File file = new File("./../Characters/" + name + ".txt");
     FileWriter writer = new FileWriter(file);
     BufferedWriter output = new BufferedWriter(writer);
@@ -69,6 +78,8 @@ public class UserHandler {
 
     try {
       output.write("UserName = " + name);
+      output.newLine();
+      output.write("Password = " + password);
       output.newLine();
       output.write("Score = " + score);
       output.newLine();

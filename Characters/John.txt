@@ -1,2 +1,3 @@
 UserName = John
+password = check
 Score = 12
