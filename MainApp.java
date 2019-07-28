@@ -7,21 +7,30 @@ import java.util.Scanner;
 import java.util.ArrayList;
 
 public class MainApp {
+  //this is a User file of User objects
+  public static ArrayList<Users> userList = new ArrayList<Users>();
   //constant for number of useres allowed change to whatever the program is needed can also be dynamic
   public static final int listLength = 12;
+  public static Server server;
   //main method
   public static void main(String args[]) throws IOException {
     //list is the data the user enters
     ArrayList<Integer> list = new ArrayList<Integer>();
-    //this is a User file of User objects
-    ArrayList<Users> userList = new ArrayList<Users>();
     //writeFile(list);
   //  readFile(userList);
     //findHighScore(userList);
     //updateSingleUserScore(userList, list);
-    initUserHandler(userList);
+    //initUserHandler(userList);
+    server = new Server();
+    server.init();
   }
-  //gets users and pushes to userList
+  //used for client connections from the input stream
+  public static Users initUserHandler(String name) throws IOException {
+    UserHandler user = new UserHandler(name.trim());
+    userList.add(user.getUser());
+    return user.getUser();
+  }
+  //gets users and pushes to userList not for client use
   public static void initUserHandler(ArrayList<Users> userList) throws IOException {
     userList.add(new UserHandler().getUser());
     printCharacterList(userList);

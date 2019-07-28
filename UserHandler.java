@@ -6,20 +6,24 @@ import java.util.Scanner;
 
 public class UserHandler {
   private Users user;
+
+  public UserHandler(String name) throws IOException {
+    login(name);
+  }
   public UserHandler() throws IOException {
     String name = promptLogin();
     login(name);
   }
 
-  public String promptLogin() {
+  private String promptLogin() {
     Scanner key = new Scanner(System.in);
     System.out.println("Enter loginName");
     String logName = key.nextLine();
     return logName;
   }
 
-  public void login(String name) throws IOException {
-    File file = new File("./Characters/" + name +".txt");
+  private void login(String name) throws IOException {
+    File file = new File("./../Characters/" + name +".txt");
     //create new file for the player
     if(!file.exists()) {
       try {
@@ -40,14 +44,18 @@ public class UserHandler {
     return user;
   }
 
-  public void firstLog(String name) throws IOException {
+  private void firstLog(String name) throws IOException {
     playerSaving(name, 0);
     login(name);
   }
 
+  public void chnageName(String newName) throws IOException {
+    user.setName(newName);
+    playerSaving(user.getName(), user.getScore());
+  }
   //for saving players information to a personal file
   public void playerSaving(String name, int score) throws IOException {
-    File file = new File("./Characters/" + name + ".txt");
+    File file = new File("./../Characters/" + name + ".txt");
     FileWriter writer = new FileWriter(file);
     BufferedWriter output = new BufferedWriter(writer);
 

@@ -21,6 +21,9 @@ public class Users {
   public void setScore(int score) {
     this.score = score;
   }
+  public void setName(String name) {
+    this.name = name;
+  }
 
   public String toString() {
     String str = "";

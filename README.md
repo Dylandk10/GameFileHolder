@@ -1,1 +1,1 @@
-This is the a back-end design for controlling users/highscores and files related to square wars
+This is the a back-end design for controlling users/highscores and files related to square wars I have also made a test client feel free to use. To run the program simply type in the terminal in which the program is located java MainApp.
