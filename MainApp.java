@@ -19,16 +19,31 @@ public class MainApp {
     ArrayList<Integer> list = new ArrayList<Integer>();
     highScoreH = new HighScoreHandler();
     highScoreH.init();
-    
+
     server = new Server();
     server.init();
   }
-  //used for client connections from the input stream
+  //used for client connections from the input stream logs user in and returns the user
   public static Users initUserHandler(String result) throws IOException {
     String[] token = result.split(",");
     UserHandler user = new UserHandler(token[0].trim(), token[1].trim());
     userList.add(user.getUser());
     return user.getUser();
+  }
+  //used for changing user name, saving user and returning user to server -> client
+  public static Users userhandlerAdjustName(String result) throws IOException {
+    Users user = new Users();
+    String[] token = result.split(",");
+    String name = token[0].trim();
+    for(Users us : userList) {
+      if(us.getName().equalsIgnoreCase(name)) {
+        us.setName(name);
+        UserHandler usHandler = new UserHandler(us.getName(), us.getPassword());
+        user = new Users(us);
+        usHandler.playerSaving();
+      }
+    }
+    return user;
   }
 
 

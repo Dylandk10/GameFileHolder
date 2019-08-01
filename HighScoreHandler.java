@@ -3,8 +3,8 @@ import java.util.Scanner;
 import java.util.ArrayList;
 
 public class HighScoreHandler {
-  private ArrayList<String> names = new ArrayList<String>();
-  private ArrayList<String> findScoresHolder = new ArrayList<String>();
+  private static ArrayList<String> names = new ArrayList<String>();
+  private static ArrayList<String> findScoresHolder = new ArrayList<String>();
 
   public HighScoreHandler() {
     System.out.println("Initializing highScoreHandler");

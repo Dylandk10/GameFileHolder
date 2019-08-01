@@ -91,6 +91,34 @@ public class UserHandler {
     output.close();
     writer.close();
   }
+  //for saving players information to a personal file
+  public void playerSaving() throws IOException {
+    File file = new File("./../Characters/" + user.getName() + ".txt");
+    FileWriter writer = new FileWriter(file);
+    BufferedWriter output = new BufferedWriter(writer);
+
+    if(!file.exists()) {
+      try {
+        file.createNewFile();
+      } catch(IOException e) {
+        System.out.println("player File not found and can not create one");
+      }
+    }
+
+    try {
+      output.write("UserName = " + user.getName());
+      output.newLine();
+      output.write("Password = " + user.getPassword());
+      output.newLine();
+      output.write("Score = " + user.getScore());
+      output.newLine();
+    } catch(Exception e) {
+      System.out.println("Could not write character file");
+    }
+    output.close();
+    writer.close();
+  }
+
   private void writeUserNameFile(String name) throws IOException {
     File file = new File("./../Data/UserNames.txt");
     FileWriter writer = new FileWriter(file, true);

@@ -4,6 +4,11 @@ public class Users {
   private String password;
   private int score;
 
+  public Users() {
+    this.name = "";
+    this.password = "";
+    this.score = 0;
+  }
   public Users(String name, String password, String score) {
     this.name = name;
     this.password = password;
@@ -12,6 +17,7 @@ public class Users {
 
   public Users(Users user) {
     this.name = user.name;
+    this.password = user.password;
     this.score = user.score;
   }
 

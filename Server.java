@@ -12,7 +12,7 @@ public class Server {
   ExecutorService pool;
   Users user;
 
-  //this is the listener for sockets accepted
+  //this is the listener for sockets accepted allows for only 20 fixed threads
   public void init() throws IOException {
     try {
       listener = new ServerSocket(9898);
@@ -43,8 +43,10 @@ public class Server {
         while(inputStream.hasNextLine()) {
           //sends to get the user from back end then returns the user for use
           String result = inputStream.nextLine();
-          user = MainApp.initUserHandler(result);
-          outputStream.println("UserName: " + user.getName() + ", Score: " + user.getScore());
+          String[] res = result.split(":");
+          int caseNum = Integer.parseInt(res[0]);
+          user = caseReader(caseNum, res[1]);
+          outputSender(user, outputStream, caseNum);
         }
       } catch(Exception e) {
         System.out.println("Socket Error: " + socket);
@@ -55,6 +57,34 @@ public class Server {
           System.out.println("Could not close socket");
         }
       }
+    }
+    //outputSender is used for sending data to client
+    public void outputSender(Users user, PrintWriter output, int caseReader) {
+      switch(caseReader) {
+        //case 1 = login
+        case 1:
+          output.println("UserName: " + user.getName() + " Score: " + user.getScore());
+          break;
+        //case 2 = chnage user name
+        case 2:
+          output.println("UserName changed to: " + user.getName());
+          break;
+      }
+    }
+    //used to determin where send the thread
+    private Users caseReader(int result, String message) throws IOException {
+      Users xuser = new Users();
+      switch(result) {
+        //case 1 = login
+        case 1:
+          xuser = MainApp.initUserHandler(message);
+          break;
+        //case 2 = change user name
+          case 2:
+          xuser = MainApp.userhandlerAdjustName(message);
+          break;
+      }
+      return xuser;
     }
   }
 }
