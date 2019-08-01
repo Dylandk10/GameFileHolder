@@ -12,15 +12,14 @@ public class MainApp {
   //constant for number of useres allowed change to whatever the program is needed can also be dynamic
   public static final int listLength = 12;
   public static Server server;
+  public static HighScoreHandler highScoreH;
   //main method
   public static void main(String args[]) throws IOException {
     //list is the data the user enters
     ArrayList<Integer> list = new ArrayList<Integer>();
-    //writeFile(list);
-  //  readFile(userList);
-    //findHighScore(userList);
-    //updateSingleUserScore(userList, list);
-    //initUserHandler(userList);
+    highScoreH = new HighScoreHandler();
+    highScoreH.init();
+    
     server = new Server();
     server.init();
   }
@@ -31,6 +30,11 @@ public class MainApp {
     userList.add(user.getUser());
     return user.getUser();
   }
+
+
+  //All for testing below this line2 (need to move to test package)
+//#######################################################################################
+
   //gets users and pushes to userList not for client use
   public static void initUserHandler(ArrayList<Users> userList) throws IOException {
     userList.add(new UserHandler().getUser());
@@ -47,7 +51,7 @@ public class MainApp {
 
   //actually writes the data to the file
   public static void writeToFile(ArrayList list) throws IOException {
-    File file = new File("data.txt");
+    File file = new File("./Data/data.txt");
     FileWriter writer = new FileWriter(file);
     BufferedWriter outStream = new BufferedWriter(writer);
     try {
@@ -89,7 +93,7 @@ public class MainApp {
 
   //creates a file if needed
   public static void createFile() {
-    File file = new File("data.txt");
+    File file = new File("./Data/data.txt");
 
     if(!(file.exists())) {
       try {
@@ -104,7 +108,7 @@ public class MainApp {
   }
   //updates the data file for a single user
   public static void updateDataFile(ArrayList<Integer> list, String userName, int score) throws IOException {
-    File file = new File("data.txt");
+    File file = new File("./Data/data.txt");
     Scanner reader = new Scanner(file);
 
     if(!file.exists()) {
@@ -128,7 +132,7 @@ public class MainApp {
 //reads the file with all data including user names
 //creates new User object
   public static void readFile(ArrayList<Users> userList) throws IOException {
-    File file = new File("data.txt");
+    File file = new File("./Data/data.txt");
     Scanner reader = new Scanner(file);
 
     if(!file.exists()) {
@@ -166,7 +170,7 @@ public class MainApp {
 
   //write a highscores file to show the high scores listLength
   public static void writeHighScores(ArrayList<Users> userList) throws IOException {
-    File file = new File("highScores.txt");
+    File file = new File("./Data/highScores.txt");
     FileWriter writer = new FileWriter(file);
     BufferedWriter outStream = new BufferedWriter(writer);
     try {

@@ -1,3 +1,0 @@
-Todo
-make a edit user score that also updates the highscore and data.txt
-add binary tree to sort the data

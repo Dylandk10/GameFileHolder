@@ -10,6 +10,7 @@ public class UserHandler {
   public UserHandler(String name, String password) throws IOException {
     login(name, password);
   }
+  //default for testing purposes
   public UserHandler() throws IOException {
     String name = promptLogin();
     String password = promptPass();
@@ -55,6 +56,7 @@ public class UserHandler {
 
   private void firstLog(String name, String password) throws IOException {
     playerSaving(name, 0, password);
+    writeUserNameFile(name);
     login(name, password);
   }
 
@@ -85,6 +87,23 @@ public class UserHandler {
       output.newLine();
     } catch(Exception e) {
       System.out.println("Could not write character file");
+    }
+    output.close();
+    writer.close();
+  }
+  private void writeUserNameFile(String name) throws IOException {
+    File file = new File("./../Data/UserNames.txt");
+    FileWriter writer = new FileWriter(file, true);
+    BufferedWriter output = new BufferedWriter(writer);
+    if(!file.exists())
+      System.out.println("Can not find Username.txt");
+    else {
+      try {
+        output.write(name);
+        output.newLine();
+      } catch(Exception e) {
+        System.out.println("Could not write File");
+      }
     }
     output.close();
     writer.close();

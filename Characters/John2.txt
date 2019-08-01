@@ -1,0 +1,3 @@
+UserName = John2
+password = check
+Score = 16
