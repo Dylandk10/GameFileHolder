@@ -1,6 +1,6 @@
 /**
   This is for handling all players as a world objects and all the data while UserHandler
-  is ment for handling individual objects of the user
+  is ment for handling individual objects of the user, MiddleWare between server and Userhandler/HighScoreHandler
 */
 import java.io.*;
 import java.util.Scanner;
@@ -34,13 +34,34 @@ public class MainApp {
   public static Users userhandlerAdjustName(String result) throws IOException {
     Users user = new Users();
     String[] token = result.split(",");
-    String name = token[0].trim();
+    String oldName = token[0].trim();
+    String nName = token[1].trim();
+
     for(Users us : userList) {
-      if(us.getName().equalsIgnoreCase(name)) {
-        us.setName(name);
+      if(us.getName().equalsIgnoreCase(oldName)) {
+        us.setName(nName);
         UserHandler usHandler = new UserHandler(us.getName(), us.getPassword());
         user = new Users(us);
         usHandler.playerSaving();
+        highScoreH.changeNameOfUser(oldName, nName);
+      }
+    }
+    return user;
+  }
+  //from client connected changes the users score retuns user to Server -> client
+  public static Users userHandlerAdjustScore(String result) throws IOException {
+    Users user = new Users();
+    String[] token = result.split(",");
+    String name = token[0].trim();
+    int score = Integer.parseInt(token[1].trim());
+
+    for(Users us : userList) {
+      if(us.getName().equalsIgnoreCase(name)) {
+        us.setScore(score);
+        UserHandler usH = new UserHandler(us.getName(), us.getPassword());
+        user = new Users(us);
+        usH.playerSaving();
+        highScoreH.changeScoreOfUser(name, score);
       }
     }
     return user;

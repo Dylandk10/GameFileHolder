@@ -41,6 +41,7 @@ public class HighScoreHandler {
     }
   }
 
+  //bubble sort to sort data in ascending order
   private void findHighScore() {
     for (int i = 0; i < findScoresHolder.size() - 1; i++) {
       for(int k = 0; k < findScoresHolder.size() - i-1; k++) {
@@ -57,7 +58,7 @@ public class HighScoreHandler {
       }
     }
   }
-
+  //sub-method for findUserAndScore
   private String tokenizeLine(String line) {
     String[] returnResult = line.split("=");
     return returnResult[1].trim();
@@ -78,5 +79,32 @@ public class HighScoreHandler {
       }
       output.close();
       writer.close();
+  }
+  //to add a new user to the list
+  public void addNewUser(String name, int score) {
+    findScoresHolder.add(name + "," + Integer.toString(score));
+  }
+
+  //used for updating the highscores user name
+  public void changeNameOfUser(String oldName, String nName) {
+    for(int i = 0; i < findScoresHolder.size(); i++) {
+      String[] token = findScoresHolder.get(i).split(",");
+      String name = token[0];
+
+      if(name.equals(oldName)) {
+        findScoresHolder.set(i, nName + "," + token[1]);
+      }
+    }
+  }
+  //used to update and chnage the user score
+  public void changeScoreOfUser(String name, int score) {
+    for(int i = 0; i < findScoresHolder.size(); i++) {
+      String[] token = findScoresHolder.get(i).split(",");
+      String xname = token[0].trim();
+
+      if(xname.equals(name)) {
+        findScoresHolder.set(i, xname + "," + score);
+      }
+    }
   }
 }

@@ -65,9 +65,13 @@ public class Server {
         case 1:
           output.println("UserName: " + user.getName() + " Score: " + user.getScore());
           break;
-        //case 2 = chnage user name
+        //case 2 = change user name
         case 2:
           output.println("UserName changed to: " + user.getName());
+          break;
+        //case 3 = change user score
+        case 3:
+          output.println("User name: " + user.getName() + "Score changed to " + user.getScore());
           break;
       }
     }
@@ -80,8 +84,12 @@ public class Server {
           xuser = MainApp.initUserHandler(message);
           break;
         //case 2 = change user name
-          case 2:
+        case 2:
           xuser = MainApp.userhandlerAdjustName(message);
+          break;
+        //case 3 = change user score
+        case 3:
+          xuser = MainApp.userHandlerAdjustScore(message);
           break;
       }
       return xuser;

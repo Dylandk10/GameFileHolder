@@ -58,6 +58,8 @@ public class UserHandler {
     playerSaving(name, 0, password);
     writeUserNameFile(name);
     login(name, password);
+    HighScoreHandler userH = new HighScoreHandler();
+    userH.addNewUser(name, 0);
   }
 
   public void chnageName(String newName) throws IOException {
