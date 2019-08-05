@@ -97,13 +97,15 @@ public class HighScoreHandler {
     }
   }
   //used to update and chnage the user score
-  public void changeScoreOfUser(String name, int score) {
+  public void changeScoreOfUser(String name, int score) throws IOException {
     for(int i = 0; i < findScoresHolder.size(); i++) {
       String[] token = findScoresHolder.get(i).split(",");
       String xname = token[0].trim();
 
       if(xname.equals(name)) {
         findScoresHolder.set(i, xname + "," + score);
+        findHighScore();
+        writeHighScores();
       }
     }
   }

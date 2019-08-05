@@ -62,8 +62,13 @@ public class UserHandler {
     userH.addNewUser(name, 0);
   }
 
-  public void chnageName(String newName) throws IOException {
-    user.setName(newName);
+  public void changeScore(int score) throws IOException {
+    user.setScore(score);
+    playerSaving(user.getName(), user.getScore(), user.getPassword());
+  }
+
+  public void changeName(String name) throws IOException {
+    user.setName(name);
     playerSaving(user.getName(), user.getScore(), user.getPassword());
   }
   //for saving players information to a personal file

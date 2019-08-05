@@ -1,4 +1,4 @@
 John3,19
 John2,16
-John,12
+John,11
 John4,0

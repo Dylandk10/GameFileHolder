@@ -24,6 +24,7 @@ public class MainApp {
     server.init();
   }
   //used for client connections from the input stream logs user in and returns the user
+  //used for loging user in
   public static Users initUserHandler(String result) throws IOException {
     String[] token = result.split(",");
     UserHandler user = new UserHandler(token[0].trim(), token[1].trim());
@@ -32,39 +33,35 @@ public class MainApp {
   }
   //used for changing user name, saving user and returning user to server -> client
   public static Users userhandlerAdjustName(String result) throws IOException {
-    Users user = new Users();
+    UserHandler usHandler = null;
     String[] token = result.split(",");
     String oldName = token[0].trim();
     String nName = token[1].trim();
 
     for(Users us : userList) {
       if(us.getName().equalsIgnoreCase(oldName)) {
-        us.setName(nName);
-        UserHandler usHandler = new UserHandler(us.getName(), us.getPassword());
-        user = new Users(us);
-        usHandler.playerSaving();
+        usHandler = new UserHandler(us.getName(), us.getPassword());
+        usHandler.changeName(nName);
         highScoreH.changeNameOfUser(oldName, nName);
       }
     }
-    return user;
+    return usHandler.getUser();
   }
   //from client connected changes the users score retuns user to Server -> client
   public static Users userHandlerAdjustScore(String result) throws IOException {
-    Users user = new Users();
+    UserHandler usH = null;
     String[] token = result.split(",");
     String name = token[0].trim();
     int score = Integer.parseInt(token[1].trim());
 
     for(Users us : userList) {
       if(us.getName().equalsIgnoreCase(name)) {
-        us.setScore(score);
-        UserHandler usH = new UserHandler(us.getName(), us.getPassword());
-        user = new Users(us);
-        usH.playerSaving();
+        usH = new UserHandler(us.getName(), us.getPassword());
+        usH.changeScore(score);
         highScoreH.changeScoreOfUser(name, score);
       }
     }
-    return user;
+    return usH.getUser();
   }
 
 
